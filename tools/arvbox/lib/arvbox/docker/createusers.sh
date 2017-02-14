@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex -o pipefail
+set -e -o pipefail
 
 if ! grep "^arvbox:" /etc/passwd >/dev/null 2>/dev/null ; then
     HOSTUID=$(ls -nd /usr/src/arvados | sed 's/ */ /' | cut -d' ' -f4)
