@@ -37,7 +37,7 @@ if ! grep "^fuse:" /etc/group >/dev/null 2>/dev/null ; then
     if test -c /dev/fuse ; then
         FUSEGID=$(ls -nd /dev/fuse | sed 's/ */ /' | cut -d' ' -f5)
         groupadd --gid $FUSEGID --non-unique fuse
-        useradd --groups fuse arvbox
-        useradd --groups fuse crunch
+        adduser arvbox fuse
+        adduser crunch fuse
     fi
 fi
