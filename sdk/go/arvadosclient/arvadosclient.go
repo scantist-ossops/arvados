@@ -25,6 +25,7 @@ import (
 	"time"
 
 	"git.arvados.org/arvados.git/sdk/go/arvados"
+	"golang.org/x/net/http2"
 )
 
 type StringMatcher func(string) bool
@@ -436,8 +437,15 @@ func (ac *ArvadosClient) httpClient() *http.Client {
 	if *c == nil {
 		defaultHTTPClientMtx.Lock()
 		defer defaultHTTPClientMtx.Unlock()
-		*c = &http.Client{Transport: &http.Transport{
-			TLSClientConfig: MakeTLSConfig(ac.ApiInsecure)}}
+		transport := &http.Transport{
+			TLSClientConfig:   MakeTLSConfig(ac.ApiInsecure),
+			ForceAttemptHTTP2: true,
+		}
+		err := http2.ConfigureTransport(transport)
+		if err != nil {
+			panic(err)
+		}
+		*c = &http.Client{Transport: transport}
 	}
 	return *c
 }
