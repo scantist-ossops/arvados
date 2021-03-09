@@ -10,3 +10,6 @@ output "shell_private_ip" {
 output "shell_private_eni_id" {
   value = aws_network_interface.shell.id
 }
+output "shell_public_ip" {
+  value = aws_eip.cluster_shell_public_ip.public_ip
+}
