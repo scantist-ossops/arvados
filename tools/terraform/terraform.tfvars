@@ -5,7 +5,6 @@ environment              = "production"
 namespace                = "3rd-party deploy test"
 
 ### KEYPAIR
-enable_key_pair          = true
 key_name                 = "javier"
 key_path                 = "~/.ssh/id_rsa.pub"
 
@@ -52,6 +51,15 @@ instance_ami = {
   # "database"  = "ami-07d02ee1eeb0c996c",
 }
 
+data_bd_size = {
+  "default"   = 50,
+  # "api"       = 50,
+  # "shell"     = 50,
+  # "keepproxy" = 50,
+  # "keepstore" = 50,
+  # "workbench" = 50,
+   "database"  = 250,
+}
 # KEEPSTORE/s
 keepstore_count = 2
 

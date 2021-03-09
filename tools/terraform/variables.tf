@@ -42,6 +42,11 @@ variable "key_name" {
   type        = string
   default     = ""
 }
+variable "key_public_key" {
+  description = "Public key value if you didn't provide a path to the key"
+  type        = string
+  default     = ""
+}
 variable "enable_key_pair" {
   description = "A boolean flag to enable/disable key pair"
   type        = bool
@@ -145,12 +150,12 @@ variable "keepstore_count" {
 
 variable "root_bd_size" {
   type    = number
-  default = 40
+  default = 50
 }
 
 variable "data_bd_size" {
-  type    = number
-  default = 250
+  type    = map(number)
+  default = {}
 }
 
 variable "db_identifier" {
