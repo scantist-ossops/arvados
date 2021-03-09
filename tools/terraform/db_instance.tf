@@ -7,7 +7,7 @@ module "database" {
 
   ami                    = try(var.instance_ami["database"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["database"], var.instance_type["default"])
-  key_name               = var.key_pair
+  key_name               = var.key_name
   monitoring             = true
 
   tags                   = merge({"Name": "${var.cluster}-database",
@@ -20,7 +20,7 @@ module "database" {
   }]
 
   ebs_optimized          = true
-  # user_data              = templatefile("_bin/user_data.sh", { VM = "${var.database_name}.${var.cluster}" })
+  user_data               = templatefile("_user_data.sh", {})
 
   root_block_device           = [{
     encrypted             = true,
@@ -31,7 +31,7 @@ module "database" {
   ebs_block_device            = [{
     encrypted             = true,
     kms_key_id            = var.kms_key_id,
-    volume_size           = var.data_bd_size,
+    volume_size           = try(var.data_bd_size["database"], var.data_bd_size["default"])
     delete_on_termination = true,
     device_name           = "xvdh",
   }]

@@ -7,7 +7,7 @@ module "keepproxy" {
 
   ami                    = try(var.instance_ami["keepproxy"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["keepproxy"], var.instance_type["default"])
-  key_name               = var.key_pair
+  key_name               = var.key_name
   monitoring             = true
 
   tags                   = merge({"Name": "${var.cluster}-keepproxy",
@@ -21,7 +21,7 @@ module "keepproxy" {
 
   # associate_public_ip_address = false
   ebs_optimized           = true
-  # user_data             = templatefile("_bin/user_data.sh", { VM = "${var.keepproxy_name}.${var.cluster}" })
+  user_data               = templatefile("_user_data.sh", {})
 
   root_block_device           = [{
     encrypted             = true,
@@ -32,7 +32,7 @@ module "keepproxy" {
   ebs_block_device            = [{
     encrypted             = true,
     kms_key_id            = var.kms_key_id,
-    volume_size           = var.data_bd_size,
+    volume_size           = try(var.data_bd_size["keeproxy"], var.data_bd_size["default"])
     delete_on_termination = true,
     device_name           = "xvdh",
   }]
