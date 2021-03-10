@@ -129,7 +129,7 @@ WORKBENCH2_EXT_SSL_PORT=3001
 RELEASE="production"
 VERSION="latest"
 ARVADOS_TAG="v1.1.4"
-POSTGRES_TAG="v0.41.3"
+POSTGRES_TAG="v0.41.6"
 NGINX_TAG="v2.4.0"
 DOCKER_TAG="v1.0.0"
 LOCALE_TAG="v0.3.4"
@@ -192,10 +192,10 @@ mkdir -p ${S_DIR} ${F_DIR} ${P_DIR}
 
 # Get the formula and dependencies
 cd ${F_DIR} || exit 1
-git clone --branch "${ARVADOS_TAG}" https://github.com/arvados/arvados-formula.git
-git clone --branch "${DOCKER_TAG}" https://github.com/saltstack-formulas/docker-formula.git
-git clone --branch "${LOCALE_TAG}" https://github.com/saltstack-formulas/locale-formula.git
-git clone --branch "${NGINX_TAG}" https://github.com/saltstack-formulas/nginx-formula.git
+git clone --branch "${ARVADOS_TAG}"  https://github.com/arvados/arvados-formula.git
+git clone --branch "${DOCKER_TAG}"   https://github.com/saltstack-formulas/docker-formula.git
+git clone --branch "${LOCALE_TAG}"   https://github.com/saltstack-formulas/locale-formula.git
+git clone --branch "${NGINX_TAG}"    https://github.com/saltstack-formulas/nginx-formula.git
 git clone --branch "${POSTGRES_TAG}" https://github.com/saltstack-formulas/postgres-formula.git
 
 # If we want to try a specific branch of the formula
@@ -228,6 +228,7 @@ for f in "${SOURCE_PILLARS_DIR}"/*; do
        s/__INITIAL_USER_EMAIL__/${INITIAL_USER_EMAIL}/g;
        s/__INITIAL_USER_PASSWORD__/${INITIAL_USER_PASSWORD}/g;
        s/__INITIAL_USER__/${INITIAL_USER}/g;
+       s/__DATABASE_PASSWORD__/${DATABASE_PASSWORD}/g;
        s/__KEEPWEB_EXT_SSL_PORT__/${KEEPWEB_EXT_SSL_PORT}/g;
        s/__KEEP_EXT_SSL_PORT__/${KEEP_EXT_SSL_PORT}/g;
        s/__MANAGEMENT_TOKEN__/${MANAGEMENT_TOKEN}/g;
@@ -238,6 +239,16 @@ for f in "${SOURCE_PILLARS_DIR}"/*; do
        s/__WEBSOCKET_EXT_SSL_PORT__/${WEBSOCKET_EXT_SSL_PORT}/g;
        s/__WORKBENCH1_EXT_SSL_PORT__/${WORKBENCH1_EXT_SSL_PORT}/g;
        s/__WORKBENCH2_EXT_SSL_PORT__/${WORKBENCH2_EXT_SSL_PORT}/g;
+       s/__CONTROLLER_INT_IP__/${CONTROLLER_INT_IP}/g;
+       s/__WEBSOCKET_INT_IP__/${WEBSOCKET_INT_IP}/g;
+       s/__KEEP_INT_IP__/${KEEP_INT_IP}/g;
+       s/__KEEPSTORE0_INT_IP__/${KEEPSTORE0_INT_IP}/g;
+       s/__KEEPSTORE1_INT_IP__/${KEEPSTORE1_INT_IP}/g;
+       s/__KEEPWEB_INT_IP__/${KEEPWEB_INT_IP}/g;
+       s/__WEBSHELL_INT_IP__/${WEBSHELL_INT_IP}/g;
+       s/__WORKBENCH1_INT_IP__/${WORKBENCH1_INT_IP}/g;
+       s/__WORKBENCH2_INT_IP__/${WORKBENCH2_INT_IP}/g;
+       s/__DATABASE_INT_IP__/${DATABASE_INT_IP}/g;
        s/__WORKBENCH_SECRET_KEY__/${WORKBENCH_SECRET_KEY}/g" \
   "${f}" > "${P_DIR}"/$(basename "${f}")
 done
@@ -252,6 +263,7 @@ for f in "${SOURCE_TESTS_DIR}"/*; do
        s/__INITIAL_USER_EMAIL__/${INITIAL_USER_EMAIL}/g;
        s/__INITIAL_USER_PASSWORD__/${INITIAL_USER_PASSWORD}/g
        s/__INITIAL_USER__/${INITIAL_USER}/g;
+       s/__DATABASE_PASSWORD__/${DATABASE_PASSWORD}/g;
        s/__SYSTEM_ROOT_TOKEN__/${SYSTEM_ROOT_TOKEN}/g" \
   "${f}" > "/tmp/cluster_tests"/$(basename "${f}")
 done
@@ -272,6 +284,7 @@ if [ -d "${SOURCE_STATES_DIR}" ]; then
          s/__INITIAL_USER_EMAIL__/${INITIAL_USER_EMAIL}/g;
          s/__INITIAL_USER_PASSWORD__/${INITIAL_USER_PASSWORD}/g;
          s/__INITIAL_USER__/${INITIAL_USER}/g;
+         s/__DATABASE_PASSWORD__/${DATABASE_PASSWORD}/g;
          s/__KEEPWEB_EXT_SSL_PORT__/${KEEPWEB_EXT_SSL_PORT}/g;
          s/__KEEP_EXT_SSL_PORT__/${KEEP_EXT_SSL_PORT}/g;
          s/__MANAGEMENT_TOKEN__/${MANAGEMENT_TOKEN}/g;

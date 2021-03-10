@@ -32,6 +32,19 @@ WEBSOCKET_EXT_SSL_PORT=443
 WORKBENCH1_EXT_SSL_PORT=443
 WORKBENCH2_EXT_SSL_PORT=443
 
+# Internal IPs for the configuration
+CONTROLLER_INT_IP=10.0.0.1
+WEBSOCKET_INT_IP=10.0.0.1
+KEEP_INT_IP=10.0.0.2
+KEEPSTORE0_INT_IP=10.0.0.3
+KEEPSTORE1_INT_IP=10.0.0.4
+# Both for collections and downloads
+KEEPWEB_INT_IP=10.0.0.5
+WEBSHELL_INT_IP=10.0.0.6
+WORKBENCH1_INT_IP=10.0.0.7
+WORKBENCH2_INT_IP=10.0.0.7
+DATABASE_INT_IP=10.0.0.8
+
 INITIAL_USER="admin"
 
 # If not specified, the initial user email will be composed as
@@ -45,6 +58,7 @@ MANAGEMENT_TOKEN=managementtokenmushaveatleast32characters
 SYSTEM_ROOT_TOKEN=systemroottokenmushaveatleast32characters
 ANONYMOUS_USER_TOKEN=anonymoususertokenmushaveatleast32characters
 WORKBENCH_SECRET_KEY=workbenchsecretkeymushaveatleast32characters
+DATABASE_PASSWORD=please_set_this_to_some_secure_value
 
 # The directory to check for the config files (pillars, states) you want to use.
 # There are a few examples under 'config_examples'. If you don't change this
