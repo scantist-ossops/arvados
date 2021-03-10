@@ -1,32 +1,24 @@
-resource "aws_route53_zone" "private" {
-  name          = var.r53_domain_name
-  comment       = "Private ${var.r53_domain_name} AWS zone"
-
-  vpc {
+## ZONE definition
+module "r53_zone_public" {
+  source      = "./modules/aws/route53/zone/public"
+  zone_name   = var.r53_domain_name
+  tags        = merge(
+                      {"Name"    = var.r53_domain_name,
+                       "Cluster" = var.cluster,
+                      },
+                      local.resource_tags,
+                     )
+}
+module "r53_zone_private" {
+  source      = "./modules/aws/route53/zone/private"
+  zone_name   = var.r53_domain_name
+  zone_config = {
     vpc_id = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
   }
-
-  force_destroy = var.route53_force_destroy
-
-  tags          = merge(
-                        {"Name"    = var.r53_domain_name,
-                         "Type"    = "private",
-                         "Cluster" = var.cluster,
-                        },
-                        local.resource_tags,
-                       )
-}
-resource "aws_route53_zone" "public" {
-  name          = var.r53_domain_name
-  comment       = "Public ${var.r53_domain_name} AWS zone"
-
-  force_destroy = var.route53_force_destroy
-
-  tags          = merge(
-                        {"Name"    = var.r53_domain_name,
-                         "Type"    = "public",
-                         "Cluster" = var.cluster,
-                        },
-                        local.resource_tags,
-                       )
+  tags        = merge(
+                      {"Name"    = var.r53_domain_name,
+                       "Cluster" = var.cluster,
+                      },
+                      local.resource_tags,
+                     )
 }

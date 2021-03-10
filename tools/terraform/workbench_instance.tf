@@ -55,3 +55,37 @@ resource "aws_network_interface" "workbench" {
                     ]
   tags           = merge({"Name": "${var.cluster}-workbench"}, local.resource_tags)
 }
+
+## Public A RRs
+module "workbench_route53_public_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_public.id
+
+  zone_records_A = {
+    "workbench" = {
+      ttl     = "300",
+      records = module.workbench.public_ip
+    },
+    "workbench2" = {
+      ttl     = "300",
+      records = module.workbench.public_ip
+    },
+  }
+}
+
+## Private A RRs
+module "workbench_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    "workbench" = {
+      ttl     = "300",
+      records = module.workbench.private_ip
+    },
+    "workbench2" = {
+      ttl     = "300",
+      records = module.workbench.private_ip
+    },
+  }
+}

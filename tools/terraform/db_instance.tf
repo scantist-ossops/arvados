@@ -46,3 +46,20 @@ resource "aws_network_interface" "database" {
                     ]
   tags            = merge({"Name": "${var.cluster}-database"}, local.resource_tags)
 }
+
+## Private A RRs
+module "database_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    "database" = {
+      ttl     = "300",
+      records = module.database.private_ip
+    },
+    "db" = {
+      ttl     = "300",
+      records = module.database.private_ip
+    }
+  }
+}

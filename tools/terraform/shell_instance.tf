@@ -54,3 +54,33 @@ resource "aws_network_interface" "shell" {
                     ]
   tags           = merge({"Name": "${var.cluster}-shell"}, local.resource_tags)
 }
+
+## Public A RRs
+module "shell_route53_public_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_public.id
+
+  zone_records_A = {
+    "shell" = {
+      ttl     = "300",
+      records = module.shell.public_ip
+    },
+  }
+}
+
+## Private A RRs
+module "shell_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    "shell" = {
+      ttl     = "300",
+      records = module.shell.private_ip
+    },
+    "webshell" = {
+      ttl     = "300",
+      records = module.shell.private_ip
+    },
+  }
+}

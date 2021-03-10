@@ -4,6 +4,6 @@ resource "aws_route53_zone" "this" {
   force_destroy = lookup(var.zone_config, "force_destroy", null)
   tags          = merge(
                         var.tags,
-                        {"zone_scope" = "public"}
+                        {"ZoneScope" = "public"}
                        )
 }

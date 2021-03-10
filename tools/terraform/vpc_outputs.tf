@@ -32,21 +32,3 @@ output "vpc_compute_subnets_cidr_blocks" {
 output "vpc_public_subnets_cidr_blocks" {
   value = var.manage_vpc ? module.vpc.0.public_subnets_cidr_blocks : var.public_subnets
 }
-# output "vpc_route53_private_zone_ids" {
-#   value = { for k, v in aws_route53_zone.private : k => v.id }
-# }
-# output "vpc_route53_private_zone_name" {
-#   value = { for k, v in aws_route53_zone.private : k => v.name }
-# }
-# output "vpc_route53_private_name_servers" {
-#   value = { for k, v in aws_route53_zone.private : k => v.name_servers }
-# }
-# output "vpc_route53_public_zone_ids" {
-#   value = { for k, v in aws_route53_zone.public : k => v.id }
-# }
-# output "vpc_route53_public_zone_name" {
-#   value = { for k, v in aws_route53_zone.public : k => v.name }
-# }
-# output "vpc_route53_public_name_servers" {
-#   value = { for k, v in aws_route53_zone.public : k => v.name_servers }
-# }

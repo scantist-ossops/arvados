@@ -55,3 +55,53 @@ resource "aws_network_interface" "keepproxy" {
                     ]
   tags           = merge({"Name": "${var.cluster}-keepproxy"}, local.resource_tags)
 }
+
+## Public A RRs
+module "keepproxy_route53_public_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_public.id
+
+  zone_records_A = {
+    "keep" = {
+      ttl     = "300",
+      records = module.keepproxy.public_ip
+    },
+    "collections" = {
+      ttl     = "300",
+      records = module.keepproxy.public_ip
+    },
+    "*.collections" = {
+      ttl     = "300",
+      records = module.keepproxy.public_ip
+    },
+    "download" = {
+      ttl     = "300",
+      records = module.keepproxy.public_ip
+    }
+  }
+}
+
+## Private A RRs
+module "keepproxy_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    "keep" = {
+      ttl     = "300",
+      records = module.keepproxy.private_ip
+    },
+    "collections" = {
+      ttl     = "300",
+      records = module.keepproxy.private_ip
+    },
+    "*.collections" = {
+      ttl     = "300",
+      records = module.keepproxy.private_ip
+    },
+    "download" = {
+      ttl     = "300",
+      records = module.keepproxy.private_ip
+    }
+  }
+}

@@ -61,3 +61,21 @@ resource "aws_network_interface" "keepstore" {
   tags      = merge({"Name": "${var.cluster}-keepstore-${format("%02d", count.index)}"},
                     local.resource_tags)
 }
+
+### FIXME! Needs improvement
+## Private A RRs
+module "keepstore_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    "keep0" = {
+      ttl     = "300",
+      records = module.keepstore.0.private_ip
+    },
+    "keep1" = {
+      ttl     = "300",
+      records = module.keepstore.1.private_ip
+    },
+  }
+}

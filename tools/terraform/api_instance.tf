@@ -56,3 +56,37 @@ resource "aws_network_interface" "api" {
                     ]
   tags           = merge({"Name": "${var.cluster}-api"}, local.resource_tags)
 }
+
+## Public A RRs
+module "api_route53_public_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_public.id
+
+  zone_records_A = {
+    (var.r53_domain_name) = {
+      ttl     = "300",
+      records = module.api.public_ip
+    },
+    "ws" = {
+      ttl     = "300",
+      records = module.api.public_ip
+    }
+  }
+}
+
+## Private A RRs
+module "api_route53_private_records_A" {
+  source         = "./modules/aws/route53/records/a"
+  zone_id        = module.r53_zone_private.id
+
+  zone_records_A = {
+    (var.r53_domain_name) = {
+      ttl     = "300",
+      records = module.api.private_ip
+    },
+    "ws" = {
+      ttl     = "300",
+      records = module.api.private_ip
+    }
+  }
+}
