@@ -41,6 +41,7 @@ resource "aws_network_interface" "database" {
   subnet_id       = var.manage_vpc ? module.vpc.0.private_subnets[0] : var.private_subnets_ids[0]
   # private_ips     = [cidrhost(var.vpc_subnet_cidrs[0], var.host_number["database"])]
   security_groups = [
+                     local.ssh_sg,
                      local.postgresql_sg,
                     ]
   tags            = merge({"Name": "${var.cluster}-database"}, local.resource_tags)
