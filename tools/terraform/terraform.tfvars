@@ -1,25 +1,25 @@
 ### GENERAL
-aws_profile              = "profile-to-use"
+aws_profile              = "arvados-playground"
 aws_region               = "us-east-1"
 environment              = "production"
 namespace                = "3rd-party deploy test"
 
 ### KEYPAIR
-key_name                 = "keyname"
+key_name                 = "javier"
 key_path                 = "~/.ssh/id_rsa.pub"
 
 cluster                  = "vwxyz"
-r53_domain_name          = "vwxyz.arvados.test"
+r53_domain_name          = "vwxyz.arvadosapi.com"
 
 # VPC
 # If you have/want to use a VPC already defined, set this value to false
 # and uncomment and provide values for the following variables
 
-# manage_vpc               = true
-# vpc_id                   = "vpc-12345678901234567"
-# private_subnets_ids      = []
-# compute_subnets_ids      = []
-# public_subnets_ids       = []
+manage_vpc               = true
+vpc_id                   = "vpc-0c42c0d442b6e69f0"
+private_subnets_ids      = ["subnet-0e9f42997a17b89ed"]
+compute_subnets_ids      = ["subnet-08ee1640d915736e2"]
+public_subnets_ids       = ["subnet-029286e3665e4a6b5"]
 
 cluster_cidr             = "10.0.0.0/16"
 azs                      = ["us-east-1a"]
@@ -65,16 +65,16 @@ keepstore_count = 2
 
 # SECURITY
 # CIDRs allowed unrestricted access to the instances
-# allowed_access_cidrs = ["0.0.0.0/0"]
+allowed_ssh_access_cidrs = ["186.123.88.103/32"]
 
 # If you have/want to use already defined security groups, set this value to false
 # and uncomment and provide values for the following variables
-# vpc_security_group_ids = {
-#   "default"    = "sg-01111111111111110",
-#   "ssh"        = "sg-01234567890123456",
-#   "http"       = "sg-12345678901234567",
-#   "https"      = "sg-23456789012345678",
-#   "webshell"   = "sg-34567890123456789",
-#   "postgresql" = "sg-45678901234567890",
-#   "keepstore"  = "sg-56789012345678901",
-# }
+manage_security_groups = true
+vpc_security_group_ids = {
+  "ssh"        = "sg-01234567890123456",
+  "http"       = "sg-12345678901234567",
+  "https"      = "sg-23456789012345678",
+  "webshell"   = "sg-34567890123456789",
+  "postgresql" = "sg-45678901234567890",
+  "keepstore"  = "sg-56789012345678901",
+}

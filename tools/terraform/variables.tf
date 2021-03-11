@@ -114,10 +114,20 @@ variable "enable_dhcp_options" {
   type = bool
   default = false
 }
-variable "allowed_access_cidrs" {
-  description = "CIDRs that will have access to the cluster's VPC"
+variable "allowed_http_access_cidrs" {
+  description = "CIDRs that will have HTTP/HTTPs access to the cluster's VPC instances"
   type        = list(string)
   default     = ["0.0.0.0/0"]
+}
+variable "allowed_ssh_access_cidrs" {
+  description = "CIDRs that will have ssh access to the cluster's VPC instances"
+  type        = list(string)
+  default     = []
+}
+variable "allowed_full_access_cidrs" {
+  description = "CIDRs that will have full access to the cluster's VPC instances"
+  type        = list(string)
+  default     = []
 }
 
 variable "kms_key_id" {

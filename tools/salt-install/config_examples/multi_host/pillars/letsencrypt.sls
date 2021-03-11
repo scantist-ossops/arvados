@@ -27,4 +27,4 @@ nginx:
     ### LETSENCRYPT DEFAULT PATH
     letsencrypt_well_known.conf:
       - location /.well-known:
-      - root: /tmp
+        - root: /tmp

@@ -7,7 +7,8 @@ module "arvados_ssh_sg" {
   vpc_id              = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
 
   ingress_cidr_blocks = concat(
-                               var.allowed_access_cidrs,
+                               var.allowed_full_access_cidrs,
+                               var.allowed_ssh_access_cidrs,
                                var.private_subnets,
                                var.public_subnets
                               )
@@ -21,7 +22,8 @@ module "arvados_http_sg" {
   description         = "HTTP security group"
   vpc_id              = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
   ingress_cidr_blocks = concat(
-                               var.allowed_access_cidrs,
+                               var.allowed_full_access_cidrs,
+                               var.allowed_http_access_cidrs,
                                var.private_subnets,
                                var.public_subnets
                               )
@@ -35,7 +37,8 @@ module "arvados_https_sg" {
   description         = "HTTPs security group"
   vpc_id              = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
   ingress_cidr_blocks = concat(
-                               var.allowed_access_cidrs,
+                               var.allowed_full_access_cidrs,
+                               var.allowed_http_access_cidrs,
                                var.private_subnets,
                                var.public_subnets
                               )
@@ -51,7 +54,8 @@ module "arvados_webshell_sg" {
   vpc_id              = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
 
   ingress_cidr_blocks = concat(
-                                var.allowed_access_cidrs,
+                                var.allowed_full_access_cidrs,
+                                var.allowed_ssh_access_cidrs,
                                 var.private_subnets,
                         )
   ingress_with_cidr_blocks = [
@@ -75,7 +79,7 @@ module "arvados_postgresql_sg" {
   vpc_id              = var.manage_vpc ? module.vpc.*.vpc_id[0] : var.vpc_id
 
   ingress_cidr_blocks = concat(
-                               var.allowed_access_cidrs,
+                               var.allowed_full_access_cidrs,
                                var.private_subnets,
                               )
 
