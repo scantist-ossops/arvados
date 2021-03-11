@@ -133,6 +133,7 @@ POSTGRES_TAG="v0.41.6"
 NGINX_TAG="v2.4.0"
 DOCKER_TAG="v1.0.0"
 LOCALE_TAG="v0.3.4"
+LETSENCRYPT_TAG="v2.1.0"
 
 # Salt's dir
 ## states
@@ -192,11 +193,12 @@ mkdir -p ${S_DIR} ${F_DIR} ${P_DIR}
 
 # Get the formula and dependencies
 cd ${F_DIR} || exit 1
-git clone --branch "${ARVADOS_TAG}"  https://github.com/arvados/arvados-formula.git
-git clone --branch "${DOCKER_TAG}"   https://github.com/saltstack-formulas/docker-formula.git
-git clone --branch "${LOCALE_TAG}"   https://github.com/saltstack-formulas/locale-formula.git
-git clone --branch "${NGINX_TAG}"    https://github.com/saltstack-formulas/nginx-formula.git
-git clone --branch "${POSTGRES_TAG}" https://github.com/saltstack-formulas/postgres-formula.git
+git clone --branch "${ARVADOS_TAG}"     https://github.com/arvados/arvados-formula.git
+git clone --branch "${DOCKER_TAG}"      https://github.com/saltstack-formulas/docker-formula.git
+git clone --branch "${LOCALE_TAG}"      https://github.com/saltstack-formulas/locale-formula.git
+git clone --branch "${NGINX_TAG}"       https://github.com/saltstack-formulas/nginx-formula.git
+git clone --branch "${POSTGRES_TAG}"    https://github.com/saltstack-formulas/postgres-formula.git
+git clone --branch "${LETSENCRYPT_TAG}" https://github.com/saltstack-formulas/letsencrypt-formula.git
 
 # If we want to try a specific branch of the formula
 if [ "x${BRANCH}" != "x" ]; then
@@ -342,6 +344,9 @@ fi
 # and its dependencies
 if [ -z "${ROLES}" ]; then
   # States
+  if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
+    grep -q "letsencrypt" ${S_DIR}/top.sls || echo "    - letsencrypt" >> ${S_DIR}/top.sls
+  fi
   echo "    - nginx.passenger" >> ${S_DIR}/top.sls
   echo "    - postgres" >> ${S_DIR}/top.sls
   echo "    - docker" >> ${S_DIR}/top.sls
@@ -385,10 +390,17 @@ else
       "controller" | "websocket" | "workbench" | "workbench2" | "keepweb" | "keepproxy")
         # States
         grep -q "nginx.passenger" ${S_DIR}/top.sls || echo "    - nginx.passenger" >> ${S_DIR}/top.sls
+        if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
+          grep -q "letsencrypt" ${S_DIR}/top.sls || echo "    - letsencrypt" >> ${S_DIR}/top.sls
+        fi
         grep -q "arvados.${R}" ${S_DIR}/top.sls    || echo "    - arvados.${R}" >> ${S_DIR}/top.sls
         # Pillars
         grep -q "nginx_passenger" ${P_DIR}/top.sls          || echo "    - nginx_passenger" >> ${P_DIR}/top.sls
         grep -q "nginx_${R}_configuration" ${P_DIR}/top.sls || echo "    - nginx_${R}_configuration" >> ${P_DIR}/top.sls
+        if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
+          grep -q "letsencrypt" ${P_DIR}/top.sls || echo "    - letsencrypt" >> ${P_DIR}/top.sls
+          grep -q "letsencrypt_${R}_configuration" ${P_DIR}/top.sls || echo "    - letsencrypt_${R}_configuration" >> ${P_DIR}/top.sls
+        fi
       ;;
       "shell")
         # States

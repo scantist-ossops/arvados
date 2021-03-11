@@ -43,7 +43,8 @@ nginx:
                 - return: 503
             - location /config.json:
               - return: {{ "200 '" ~ '{"API_HOST":"__CLUSTER__.__DOMAIN__:__CONTROLLER_EXT_SSL_PORT__"}' ~ "'" }}
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/workbench2.__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/workbench2.__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/workbench2.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/workbench2.__DOMAIN__.error.log

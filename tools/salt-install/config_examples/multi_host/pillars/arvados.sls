@@ -107,19 +107,19 @@ arvados:
         ResourceTags:
           Name: __CLUSTER__-compute-node
         BootProbeCommand: 'sudo docker ps -q'
-        ImageID: ami-0b62b63b80ae2fc52
+        ImageID: ami-FIXMEFIXMEFIXMEFI
         Driver: ec2
         DriverParameters:
-          Region: eu-central-1
+          Region: FIXME
           EBSVolumeType: gp2
-          AdminUsername: ubuntu
-          ### FIXME!
-          SecurityGroupIDs: ['sg-0701b163c01455111']
-          SubnetID: subnet-00265ac141a146fc4
+          AdminUsername: admin
+          SecurityGroupIDs: ['sg-FIXMEFIXMEFIXMEFI']
+          SubnetID: subnet-FIXMEFIXMEFIXMEFI
       DispatchPrivateKey: |
         -----BEGIN OPENSSH PRIVATE KEY-----
         Read https://doc.arvados.org/v2.0/install/install-dispatch-cloud.html
         for details on how to create it and where to place the key
+        FIXMEFIXMEFIXMEFI
         -----END OPENSSH PRIVATE KEY-----
 
     ### VOLUMES
@@ -136,7 +136,7 @@ arvados:
         DriverParameters:
           Bucket: __CLUSTER__-nyw5e-0000000000000000-volume
           IAMRole: __CLUSTER__-keepstore-00-iam-assume-role
-          Region: eu-central-1
+          Region: FIXME
       __CLUSTER__-nyw5e-0000000000000001:
         AccessViaHosts:
           'http://__KEEPSTORE1_INT_IP__:25107':
@@ -146,7 +146,7 @@ arvados:
         DriverParameters:
           Bucket: __CLUSTER__-nyw5e-0000000000000001-volume
           IAMRole: __CLUSTER__-keepstore-01-iam-assume-role
-          Region: eu-central-1
+          Region: FIXME
 
     Users:
       NewUsersAreActive: true

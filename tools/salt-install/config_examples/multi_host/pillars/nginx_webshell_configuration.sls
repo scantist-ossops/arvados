@@ -68,8 +68,9 @@ nginx:
                 - add_header: "'Access-Control-Allow-Methods' 'GET, POST, OPTIONS'"
                 - add_header: "'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type'"
 
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/webshell.__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/webshell.__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/webshell.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/webshell.__DOMAIN__.error.log
 

@@ -7,6 +7,9 @@ output "cluster" {
 output "vpc_name" {
   value = var.manage_vpc ? module.vpc.0.name : var.cluster
 }
+output "vpc_cidr" {
+  value = var.cluster_cidr
+}
 output "vpc_azs" {
   value = var.manage_vpc ? module.vpc.0.azs : var.azs
 }

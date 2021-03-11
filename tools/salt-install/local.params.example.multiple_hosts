@@ -47,11 +47,11 @@ WORKBENCH2_INT_IP=10.0.0.7
 DATABASE_INT_IP=10.0.0.8
 
 INITIAL_USER="admin"
+INITIAL_USER_PASSWORD="password"
 
 # If not specified, the initial user email will be composed as
 # INITIAL_USER@CLUSTER.DOMAIN
 INITIAL_USER_EMAIL="admin@fixme.some.domain"
-INITIAL_USER_PASSWORD="password"
 
 # YOU SHOULD CHANGE THESE TO SOME RANDOM STRINGS
 BLOB_SIGNING_KEY=blobsigningkeymushaveatleast32characters
@@ -60,6 +60,15 @@ SYSTEM_ROOT_TOKEN=systemroottokenmushaveatleast32characters
 ANONYMOUS_USER_TOKEN=anonymoususertokenmushaveatleast32characters
 WORKBENCH_SECRET_KEY=workbenchsecretkeymushaveatleast32characters
 DATABASE_PASSWORD=please_set_this_to_some_secure_value
+
+# SSL CERTIFICATES
+# Arvados REQUIRES valid SSL to work correctly. Otherwise, some components will fail
+# to communicate and can silently drop traffic. You can try to use the Letsencrypt
+# salt formula (https://github.com/saltstack-formulas/letsencrypt-formula) to try to
+# automatically obtain and install SSL certificates for your instances or set this
+# variable to "no", provide and upload your own certificates to the instances and
+# modify the 'nginx_*' salt pillars accordingly
+USE_LETSENCRYPT="yes"
 
 # The directory to check for the config files (pillars, states) you want to use.
 # There are a few examples under 'config_examples'. If you don't change this
@@ -92,3 +101,4 @@ POSTGRES_TAG="v0.41.6"
 NGINX_TAG="v2.4.0"
 DOCKER_TAG="v1.0.0"
 LOCALE_TAG="v0.3.4"
+LETSENCRYPT_TAG="v2.1.0"

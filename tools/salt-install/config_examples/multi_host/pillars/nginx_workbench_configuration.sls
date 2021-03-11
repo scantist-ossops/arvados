@@ -54,8 +54,9 @@ nginx:
               - proxy_set_header: 'Host $http_host'
               - proxy_set_header: 'X-Real-IP $remote_addr'
               - proxy_set_header: 'X-Forwarded-For $proxy_add_x_forwarded_for'
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/workbench.__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/workbench.__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/workbench.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/workbench.__DOMAIN__.error.log
 

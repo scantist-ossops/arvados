@@ -53,8 +53,9 @@ nginx:
               - proxy_set_header: 'X-Real-IP $remote_addr'
               - proxy_set_header: 'X-Forwarded-For $proxy_add_x_forwarded_for'
               - proxy_set_header: 'X-External-Client $external_client'
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/controller.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/controller.__DOMAIN__.error.log
             - client_max_body_size: 128m

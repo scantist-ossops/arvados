@@ -52,8 +52,9 @@ nginx:
             - client_max_body_size: 0
             - proxy_http_version: '1.1'
             - proxy_request_buffering: 'off'
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/collections.__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/collections.__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/collections.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/collections.__DOMAIN__.error.log
 
@@ -80,7 +81,8 @@ nginx:
             - client_max_body_size: 0
             - proxy_http_version: '1.1'
             - proxy_request_buffering: 'off'
-            - ssl_certificate: /etc/ssl/certs/wildcard.__DOMAIN__.crt
-            - ssl_certificate_key: /etc/ssl/private/wildcard.__DOMAIN__.key
+            - include: snippets/ssl_hardening_default.conf
+            - ssl_certificate: /etc/letsencrypt/live/download.__CLUSTER__.__DOMAIN__/fullchain.pem
+            - ssl_certificate_key: /etc/letsencrypt/live/download.__CLUSTER__.__DOMAIN__/privkey.pem
             - access_log: /var/log/nginx/download.__DOMAIN__.access.log combined
             - error_log: /var/log/nginx/download.__DOMAIN__.error.log
