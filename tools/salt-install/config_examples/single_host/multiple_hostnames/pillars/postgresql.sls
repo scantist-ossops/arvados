@@ -15,11 +15,11 @@ postgres:
     - ['local', 'all', 'all', 'peer']
     - ['host', 'all', 'all', '127.0.0.1/32', 'md5']
     - ['host', 'all', 'all', '::1/128', 'md5']
-    - ['host', 'arvados', 'arvados', '127.0.0.1/32']
+    - ['host', '__CLUSTER__arvados', '__CLUSTER__arvados', '127.0.0.1/32']
   users:
-    arvados:
+    __CLUSTER__arvados:
       ensure: present
-      password: changeme_arvados
+      password: __DATABASE_PASSWORD__
 
   # tablespaces:
   #   arvados_tablespace:
@@ -27,15 +27,15 @@ postgres:
   #     owner: arvados
 
   databases:
-    arvados:
-      owner: arvados
+    __CLUSTER__arvados:
+      owner: __CLUSTER__arvados
       template: template0
       lc_ctype: en_US.utf8
       lc_collate: en_US.utf8
       # tablespace: arvados_tablespace
       schemas:
         public:
-          owner: arvados
+          owner: __CLUSTER__arvados
       extensions:
         pg_trgm:
           if_not_exists: true

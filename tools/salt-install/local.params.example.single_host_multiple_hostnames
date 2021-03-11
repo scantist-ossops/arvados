@@ -45,6 +45,7 @@ MANAGEMENT_TOKEN=managementtokenmushaveatleast32characters
 SYSTEM_ROOT_TOKEN=systemroottokenmushaveatleast32characters
 ANONYMOUS_USER_TOKEN=anonymoususertokenmushaveatleast32characters
 WORKBENCH_SECRET_KEY=workbenchsecretkeymushaveatleast32characters
+DATABASE_PASSWORD=please_set_this_to_some_secure_value
 
 # SSL CERTIFICATES
 # Arvados REQUIRES valid SSL to work correctly. Otherwise, some components will fail
