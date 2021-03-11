@@ -344,10 +344,10 @@ fi
 # and its dependencies
 if [ -z "${ROLES}" ]; then
   # States
+  echo "    - nginx.passenger" >> ${S_DIR}/top.sls
   if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
     grep -q "letsencrypt" ${S_DIR}/top.sls || echo "    - letsencrypt" >> ${S_DIR}/top.sls
   fi
-  echo "    - nginx.passenger" >> ${S_DIR}/top.sls
   echo "    - postgres" >> ${S_DIR}/top.sls
   echo "    - docker" >> ${S_DIR}/top.sls
   echo "    - arvados" >> ${S_DIR}/top.sls
@@ -364,6 +364,9 @@ if [ -z "${ROLES}" ]; then
   echo "    - nginx_workbench2_configuration" >> ${P_DIR}/top.sls
   echo "    - nginx_workbench_configuration" >> ${P_DIR}/top.sls
   echo "    - postgresql" >> ${P_DIR}/top.sls
+  if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
+    grep -q "letsencrypt" ${P_DIR}/top.sls || echo "    - letsencrypt" >> ${P_DIR}/top.sls
+  fi
 else
   # If we add individual roles, make sure we add the repo first
   echo "    - arvados.repo" >> ${S_DIR}/top.sls
@@ -379,12 +382,12 @@ else
         # States
         # FIXME: https://dev.arvados.org/issues/17352
         grep -q "postgres.client" ${S_DIR}/top.sls || echo "    - postgres.client" >> ${S_DIR}/top.sls
+        grep -q "nginx.passenger" ${S_DIR}/top.sls || echo "    - nginx.passenger" >> ${S_DIR}/top.sls
         ### If we don't install and run LE before arvados-api-server, it fails and breaks everything
         ### after it so we add this here, as we are, after all, sharing the host for api and controller
         if [ "x${USE_LETSENCRYPT}" = "xyes" ]; then
           grep -q "letsencrypt" ${S_DIR}/top.sls || echo "    - letsencrypt" >> ${S_DIR}/top.sls
         fi
-        grep -q "nginx.passenger" ${S_DIR}/top.sls || echo "    - nginx.passenger" >> ${S_DIR}/top.sls
         grep -q "arvados.${R}" ${S_DIR}/top.sls    || echo "    - arvados.${R}" >> ${S_DIR}/top.sls
         # Pillars
         grep -q "docker" ${P_DIR}/top.sls                   || echo "    - docker" >> ${P_DIR}/top.sls

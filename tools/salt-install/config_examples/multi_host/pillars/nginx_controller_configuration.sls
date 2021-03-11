@@ -29,13 +29,12 @@ nginx:
             - server_name: __CLUSTER__.__DOMAIN__
             - listen:
               - 80 default
-            - location /.well-known:
-              - root: /var/www
+            - include: snippets/letsencrypt_well_known.conf
             - location /:
               - return: '301 https://$host$request_uri'
 
       arvados_controller_ssl:
-        enabled: true
+        enabled: false
         overwrite: true
         config:
           - server:
@@ -54,8 +53,7 @@ nginx:
               - proxy_set_header: 'X-Forwarded-For $proxy_add_x_forwarded_for'
               - proxy_set_header: 'X-External-Client $external_client'
             - include: snippets/ssl_hardening_default.conf
-            - ssl_certificate: /etc/letsencrypt/live/__CLUSTER__.__DOMAIN__/fullchain.pem
-            - ssl_certificate_key: /etc/letsencrypt/live/__CLUSTER__.__DOMAIN__/privkey.pem
-            - access_log: /var/log/nginx/controller.__DOMAIN__.access.log combined
-            - error_log: /var/log/nginx/controller.__DOMAIN__.error.log
+            - include: snippets/__CLUSTER__.__DOMAIN___letsencrypt_cert[.]conf
+            - access_log: /var/log/nginx/controller.__CLUSTER__.__DOMAIN__.access.log combined
+            - error_log: /var/log/nginx/controller.__CLUSTER__.__DOMAIN__.error.log
             - client_max_body_size: 128m

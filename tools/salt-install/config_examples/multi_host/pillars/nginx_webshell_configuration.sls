@@ -22,11 +22,10 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: webshell.__DOMAIN__
+            - server_name: webshell.__CLUSTER__.__DOMAIN__
             - listen:
               - 80
-            - location /.well-known:
-              - root: /var/www
+            - include: snippets/letsencrypt_well_known.conf
             - location /:
               - return: '301 https://$host$request_uri'
 
@@ -35,11 +34,11 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: webshell.__DOMAIN__
+            - server_name: webshell.__CLUSTER__.__DOMAIN__
             - listen:
               - __CONTROLLER_EXT_SSL_PORT__ http2 ssl
             - index: index.html index.htm
-            - location /shell.__DOMAIN__:
+            - location /shell.__CLUSTER__.__DOMAIN__:
               - proxy_pass: 'http://webshell_upstream'
               - proxy_read_timeout: 90
               - proxy_connect_timeout: 90
@@ -69,8 +68,7 @@ nginx:
                 - add_header: "'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type'"
 
             - include: snippets/ssl_hardening_default.conf
-            - ssl_certificate: /etc/letsencrypt/live/webshell.__CLUSTER__.__DOMAIN__/fullchain.pem
-            - ssl_certificate_key: /etc/letsencrypt/live/webshell.__CLUSTER__.__DOMAIN__/privkey.pem
-            - access_log: /var/log/nginx/webshell.__DOMAIN__.access.log combined
-            - error_log: /var/log/nginx/webshell.__DOMAIN__.error.log
+            - include: snippets/webshell.__CLUSTER__.__DOMAIN___letsencrypt_cert[.]conf
+            - access_log: /var/log/nginx/webshell.__CLUSTER__.__DOMAIN__.access.log combined
+            - error_log: /var/log/nginx/webshell.__CLUSTER__.__DOMAIN__.error.log
 

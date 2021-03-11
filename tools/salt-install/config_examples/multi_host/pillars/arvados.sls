@@ -112,7 +112,8 @@ arvados:
         DriverParameters:
           Region: FIXME
           EBSVolumeType: gp2
-          AdminUsername: admin
+          AdminUsername: FIXME
+          ### This SG should allow SSH from the dispatcher to the compute nodes
           SecurityGroupIDs: ['sg-FIXMEFIXMEFIXMEFI']
           SubnetID: subnet-FIXMEFIXMEFIXMEFI
       DispatchPrivateKey: |

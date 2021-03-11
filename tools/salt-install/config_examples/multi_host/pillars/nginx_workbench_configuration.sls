@@ -28,11 +28,10 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: workbench.__DOMAIN__
+            - server_name: workbench.__CLUSTER__.__DOMAIN__
             - listen:
               - 80
-            - location /.well-known:
-              - root: /var/www
+            - include: snippets/letsencrypt_well_known.conf
             - location /:
               - return: '301 https://$host$request_uri'
 
@@ -41,7 +40,7 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: workbench.__DOMAIN__
+            - server_name: workbench.__CLUSTER__.__DOMAIN__
             - listen:
               - __CONTROLLER_EXT_SSL_PORT__ http2 ssl
             - index: index.html index.htm
@@ -55,10 +54,9 @@ nginx:
               - proxy_set_header: 'X-Real-IP $remote_addr'
               - proxy_set_header: 'X-Forwarded-For $proxy_add_x_forwarded_for'
             - include: snippets/ssl_hardening_default.conf
-            - ssl_certificate: /etc/letsencrypt/live/workbench.__CLUSTER__.__DOMAIN__/fullchain.pem
-            - ssl_certificate_key: /etc/letsencrypt/live/workbench.__CLUSTER__.__DOMAIN__/privkey.pem
-            - access_log: /var/log/nginx/workbench.__DOMAIN__.access.log combined
-            - error_log: /var/log/nginx/workbench.__DOMAIN__.error.log
+            - include: snippets/workbench.__CLUSTER__.__DOMAIN___letsencrypt_cert[.]conf
+            - access_log: /var/log/nginx/workbench.__CLUSTER__.__DOMAIN__.access.log combined
+            - error_log: /var/log/nginx/workbench.__CLUSTER__.__DOMAIN__.error.log
 
       arvados_workbench_upstream:
         enabled: true
@@ -71,5 +69,5 @@ nginx:
             - index:  index.html index.htm
             - passenger_enabled: 'on'
             # yamllint disable-line rule:line-length
-            - access_log: /var/log/nginx/workbench.__DOMAIN__-upstream.access.log combined
-            - error_log: /var/log/nginx/workbench.__DOMAIN__-upstream.error.log
+            - access_log: /var/log/nginx/workbench.__CLUSTER__.__DOMAIN__-upstream.access.log combined
+            - error_log: /var/log/nginx/workbench.__CLUSTER__.__DOMAIN__-upstream.error.log

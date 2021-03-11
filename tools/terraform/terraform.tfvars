@@ -65,7 +65,7 @@ keepstore_count = 2
 
 # SECURITY
 # CIDRs allowed unrestricted access to the instances
-# allowed_access_cidrs = "0.0.0.0/0"
+# allowed_access_cidrs = ["0.0.0.0/0"]
 
 # If you have/want to use already defined security groups, set this value to false
 # and uncomment and provide values for the following variables

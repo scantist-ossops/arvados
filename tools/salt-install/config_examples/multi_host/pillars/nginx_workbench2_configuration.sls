@@ -19,11 +19,10 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: workbench2.__DOMAIN__
+            - server_name: workbench2.__CLUSTER__.__DOMAIN__
             - listen:
               - 80
-            - location /.well-known:
-              - root: /var/www
+            - include: snippets/letsencrypt_well_known.conf
             - location /:
               - return: '301 https://$host$request_uri'
 
@@ -32,7 +31,7 @@ nginx:
         overwrite: true
         config:
           - server:
-            - server_name: workbench2.__DOMAIN__
+            - server_name: workbench2.__CLUSTER__.__DOMAIN__
             - listen:
               - __CONTROLLER_EXT_SSL_PORT__ http2 ssl
             - index: index.html index.htm
@@ -44,7 +43,6 @@ nginx:
             - location /config.json:
               - return: {{ "200 '" ~ '{"API_HOST":"__CLUSTER__.__DOMAIN__:__CONTROLLER_EXT_SSL_PORT__"}' ~ "'" }}
             - include: snippets/ssl_hardening_default.conf
-            - ssl_certificate: /etc/letsencrypt/live/workbench2.__CLUSTER__.__DOMAIN__/fullchain.pem
-            - ssl_certificate_key: /etc/letsencrypt/live/workbench2.__CLUSTER__.__DOMAIN__/privkey.pem
-            - access_log: /var/log/nginx/workbench2.__DOMAIN__.access.log combined
-            - error_log: /var/log/nginx/workbench2.__DOMAIN__.error.log
+            - include: snippets/workbench2.__CLUSTER__.__DOMAIN___letsencrypt_cert[.]conf
+            - access_log: /var/log/nginx/workbench2.__CLUSTER__.__DOMAIN__.access.log combined
+            - error_log: /var/log/nginx/workbench2.__CLUSTER__.__DOMAIN__.error.log
