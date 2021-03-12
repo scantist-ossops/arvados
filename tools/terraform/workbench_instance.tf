@@ -5,6 +5,7 @@ module "workbench" {
   name                   = "${var.cluster}-workbench"
   instance_count         = 1
 
+  iam_instance_profile   = "workbench_instance_profile"
   ami                    = try(var.instance_ami["workbench"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["workbench"], var.instance_type["default"])
   key_name               = var.key_name

@@ -5,6 +5,7 @@ module "shell" {
   name                   = "${var.cluster}-shell"
   instance_count         = 1
 
+  iam_instance_profile   = "shell_instance_profile"
   ami                    = try(var.instance_ami["shell"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["shell"], var.instance_type["default"])
   key_name               = var.key_name

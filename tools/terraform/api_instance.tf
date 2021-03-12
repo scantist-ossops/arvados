@@ -5,7 +5,7 @@ module "api" {
   name                   = "${var.cluster}-api"
   instance_count         = 1
 
-  iam_instance_profile   = "dispatcher_instance_profile"
+  iam_instance_profile   = "api_instance_profile"
   ami                    = try(var.instance_ami["api"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["api"], var.instance_type["default"])
   key_name               = var.key_name

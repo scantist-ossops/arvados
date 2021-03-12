@@ -5,6 +5,7 @@ module "keepproxy" {
   name                   = "${var.cluster}-keepproxy"
   instance_count         = 1
 
+  iam_instance_profile   = "keepproxy_instance_profile"
   ami                    = try(var.instance_ami["keepproxy"], var.instance_ami["default"])
   instance_type          = try(var.instance_type["keepproxy"], var.instance_type["default"])
   key_name               = var.key_name
