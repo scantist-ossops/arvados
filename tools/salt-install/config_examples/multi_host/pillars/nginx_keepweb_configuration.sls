@@ -32,6 +32,8 @@ nginx:
       arvados_collections_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-collections.__CLUSTER__.__DOMAIN__-collections.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: '~^(.*--)?collections\.__CLUSTER__\.__DOMAIN__'
@@ -60,6 +62,8 @@ nginx:
       arvados_download_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-download.__CLUSTER__.__DOMAIN__-download.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: download.__CLUSTER__.__DOMAIN__

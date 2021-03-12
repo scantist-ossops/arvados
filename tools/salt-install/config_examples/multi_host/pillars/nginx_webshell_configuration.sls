@@ -32,6 +32,8 @@ nginx:
       arvados_webshell_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-webshell.__CLUSTER__.__DOMAIN__-webshell.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: webshell.__CLUSTER__.__DOMAIN__

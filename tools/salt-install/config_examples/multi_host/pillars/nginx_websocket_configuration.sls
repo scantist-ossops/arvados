@@ -31,6 +31,8 @@ nginx:
       arvados_websocket_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-ws.__CLUSTER__.__DOMAIN__-ws.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: ws.__CLUSTER__.__DOMAIN__

@@ -12,7 +12,7 @@ letsencrypt:
   config:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: __INITIAL_USER_EMAIL__
-    authenticator: webroot
+    authenticator: nginx
     webroot-path: /var/www
     agree-tos: true
     keep-until-expiring: true
@@ -27,4 +27,4 @@ nginx:
     ### LETSENCRYPT DEFAULT PATH
     letsencrypt_well_known.conf:
       - location /.well-known:
-        - root: /tmp
+        - root: /var/www

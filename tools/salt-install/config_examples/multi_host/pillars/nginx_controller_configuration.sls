@@ -36,6 +36,8 @@ nginx:
       arvados_controller_ssl:
         enabled: false
         overwrite: true
+        requires:
+          cmd: create-initial-cert-__CLUSTER__.__DOMAIN__-__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: __CLUSTER__.__DOMAIN__

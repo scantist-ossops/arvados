@@ -31,6 +31,8 @@ nginx:
       arvados_keepproxy_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-keep.__CLUSTER__.__DOMAIN__-keep.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: keep.__CLUSTER__.__DOMAIN__

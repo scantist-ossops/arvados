@@ -29,6 +29,8 @@ nginx:
       arvados_workbench2_ssl:
         enabled: true
         overwrite: true
+        requires:
+          cmd: create-initial-cert-workbench2.__CLUSTER__.__DOMAIN__-workbench2.__CLUSTER__.__DOMAIN__
         config:
           - server:
             - server_name: workbench2.__CLUSTER__.__DOMAIN__
