@@ -136,7 +136,7 @@ arvados:
         Driver: S3
         DriverParameters:
           Bucket: __CLUSTER__-nyw5e-0000000000000000-volume
-          IAMRole: __CLUSTER__-keepstore-00-iam-assume-role
+          IAMRole: __CLUSTER__-keepstore-00-iam-role
           Region: FIXME
       __CLUSTER__-nyw5e-0000000000000001:
         AccessViaHosts:
@@ -146,7 +146,7 @@ arvados:
         Driver: S3
         DriverParameters:
           Bucket: __CLUSTER__-nyw5e-0000000000000001-volume
-          IAMRole: __CLUSTER__-keepstore-01-iam-assume-role
+          IAMRole: __CLUSTER__-keepstore-01-iam-role
           Region: FIXME
 
     Users:
