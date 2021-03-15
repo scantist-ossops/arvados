@@ -34,7 +34,7 @@ nginx:
               - return: '301 https://$host$request_uri'
 
       arvados_controller_ssl:
-        enabled: false
+        enabled: true
         overwrite: true
         requires:
           cmd: create-initial-cert-__CLUSTER__.__DOMAIN__-__CLUSTER__.__DOMAIN__

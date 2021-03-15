@@ -257,9 +257,9 @@ for f in "${SOURCE_PILLARS_DIR}"/*; do
   "${f}" > "${P_DIR}"/$(basename "${f}")
 done
 
-mkdir -p #tmp#cluster_tests
+mkdir -p /tmp/cluster_tests
 # Replace cluster and domain name in the test files
-for f in "${SOURCE_TESTS_DIR}"#*; do
+for f in "${SOURCE_TESTS_DIR}"/*; do
   sed "s#__CLUSTER__#${CLUSTER}#g;
        s#__CONTROLLER_EXT_SSL_PORT__#${CONTROLLER_EXT_SSL_PORT}#g;
        s#__DOMAIN__#${DOMAIN}#g;
