@@ -1,7 +1,7 @@
 # Assume role policy for the instance
 resource "aws_iam_role" "keepstore_iam_assume_role" {
   count = var.keepstore_count
-  name = "${var.cluster}-keepstore-${format("%02d", count.index)}-iam-assume-role"
+  name = "${var.cluster}-keepstore-${format("%02d", count.index)}-iam-role"
 
   assume_role_policy = file("${path.module}/iam_policy_assume_role.json")
 }
@@ -27,5 +27,5 @@ resource "aws_iam_role_policy_attachment" "keepstore_policies_attachment" {
 resource "aws_iam_instance_profile" "keepstore_instance_profile" {
   count = var.keepstore_count
   name  = "keepstore-${format("%02d", count.index)}_instance_profile"
-  role = "${var.cluster}-keepstore-${format("%02d", count.index)}-iam-assume-role"
+  role = "${var.cluster}-keepstore-${format("%02d", count.index)}-iam-role"
 }
