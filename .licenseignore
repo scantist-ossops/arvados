@@ -18,7 +18,9 @@ doc/user/cwl/federated/*
 doc/_includes/_federated_cwl.liquid
 */docker_image
 docker/jobs/apt.arvados.org*.list
-docker/jobs/1078ECD7.key
+docker/jobs/*.key
+docker/api/apt.arvados.org*.list
+docker/api/*.key
 */en.bootstrap.yml
 *font-awesome.css
 *.gif
