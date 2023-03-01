@@ -24,3 +24,9 @@ RUN echo deb https://oss-binaries.phusionpassenger.com/apt/passenger bullseye ma
 
 RUN apt-get update -q
 RUN apt-get install -yq --no-install-recommends arvados-api-server arvados-controller passenger ruby-dev
+
+EXPOSE 8003
+
+COPY api-start.sh /root
+
+CMD /root/api-start.sh

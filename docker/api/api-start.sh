@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Start the first process
-(cd /var/www/arvados-api/current && passenger start) &
+(cd /var/www/arvados-api/current && RAILS_ENV=production passenger start) &
 
 # Start the second process
 arvados-controller &
